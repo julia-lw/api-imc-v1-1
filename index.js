@@ -90,7 +90,7 @@ app.listen(port, () => {
 app.put('/paciente/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, idade, telefone, email, altura, peso } = req.body;
-    if (!nome || !idade || !telefone || !email|| !altura || !peso) {
+    if (!nome || !idade || !telefone || !email || !altura || !peso) {
         res.status(400).json({
             mensagem: " Solicitação Inválida!",
             detalhes: error.message
@@ -98,7 +98,7 @@ app.put('/paciente/:id', async (req, res) => {
     }
     const { imc, status } = calcularIMC(Number(peso), Number(altura));
     try {
-        const [resultado] = await db.execute("UPDATE `pacientes` SET `nome` = ?, `idade` = ?, `altura` = ?, `peso` = ?, `imc` = ?, `status` = ? WHERE `pacientes`.`id` = ?;", [nome, idade, telefone, email, altura, peso, imc, status, id]);
+        const [resultado] = await db.execute("UPDATE `pacientes` SET `nome` = ?, `idade` = ?, `telefone` = ?, `email` = ?, `altura` = ?, `peso` = ?, `imc` = ?, `status` = ? WHERE `pacientes`.`id` = ?;", [nome, idade, telefone, email, altura, peso, imc, status, id]);
         if (resultado.affectedRows === 0) {
             return res.status(404).json({ mensagem: "Paciente não encontrado!" });
         }
